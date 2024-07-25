@@ -4,11 +4,11 @@
 The project's main focus is understanding heap.
 
 ### Problem
-Create a min-heap class of integers called `MinHeap`.
+Create a min-heap class to store the following integer [50, 42, 98, 20, 30].
 
 ### Implementation
 - Create a min-heap class of integers called `MinHeap` with the following operations: `insert()`, `delete()`, `peek()`, and `extract()`.
-- In the main method, insert values into the heap.
+- In the main method, insert the values into the heap.
 - Print the lowest value on the heap.
 - Delete the lowest value from the heap.
 - Delete the highest value from the heap.
