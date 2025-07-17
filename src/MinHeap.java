@@ -17,7 +17,8 @@ public class MinHeap{
     public void ensureCapacity(){
         if(count == heap.length){
             int[] newHeap = new int[heap.length * 2];
-            System.arraycopy(newHeap, 0, newHeap, 0, 0);
+            System.arraycopy(heap, 0, newHeap, 0, heap.length);
+            heap = newHeap;
         }}
     public void heapifyUp(int index){
         int parent = (index -1) /2;
@@ -32,45 +33,13 @@ public class MinHeap{
         heap[i] = heap[j];
         heap[j] = temp;
     }
-    public int peek(){
-        if(count == 0){
-            return-1;
-        }return heap[0];
     
-    
-    }
     boolean isEmpty(){
         return count ==0;
     }
 
-public void delete(int value){
-   if (isEmpty()){
-       System.out.println("the heap is empty ");
-       return;
-   }
-   int index = -1;
-   for(int i =0; i<count;i++){
-        if(heap[i] == value){
-            index = i;
-            break;
-        }
-
-   }
-
-   if(index == -1){
-    System.out.println("heap not found");
-   }
-   heap[index] = heap[--count];
-   int[] newHeap = new int[heap.length -1];
-   System.arraycopy(heap, 0, newHeap, 0, count);
-   heap = newHeap;
-   heapifyDown(index);
-   System.out.println("Number "+ value+ " has been deleted");
 
 
-
-
-}
 public int peak(){
     if(isEmpty()){
         return -1;
@@ -78,10 +47,14 @@ public int peak(){
 }
 
 public int extract(){
-    int max = peek();
+    int max = peak();
     if(max != -1){
         System.out.println("extract method: ");
-        delete(heap[0]);
+        swap(count - 1, 0);
+        count --;
+        heapifyDown(0);
+      
+     
     }return max;
 }
 
@@ -89,10 +62,10 @@ public void heapifyDown(int index){
     int leftChild = 2*index +1;
     int rightChild = 2*index +2;
     int largest = index;
-    if(leftChild < count && heap[leftChild] > heap[largest]){
+    if(leftChild < count && heap[leftChild] < heap[largest]){
         largest = leftChild;
     }
-    if(rightChild < count && heap[rightChild] > heap[largest]){
+    if(rightChild > count && heap[rightChild] > heap[largest]){
         largest = rightChild;
     }
 
@@ -112,19 +85,21 @@ public void heapifyDown(int index){
 
 
     public static void main(String[] args) {
-        MinHeap heapNums = new MinHeap(6);
-        int[] vals ={20,15,13,5,8,10};
-        for(int x =0; x<6; x++){
+        MinHeap heapNums = new MinHeap(4);
+        heapNums.ensureCapacity();
+        int[] vals ={50, 42, 98, 20, 30};
+
+        for(int x =0; x<vals.length ; x++){
             heapNums.insert(vals[x]);
         }System.out.println("Heap: ");
-        for(int element : heapNums.heap){
-            System.out.print(element+ " ");
+        for (int i = 0; i < heapNums.count; i++){
+            System.out.print(heapNums.heap[i]+ " ");
        }
         System.out.println("heap peek: "+heapNums.peak());
         heapNums.extract();
         System.out.println("heap peek: "+ heapNums.peak());
-         for(int element : heapNums.heap){
-            System.out.print(element+ " ");
+        for (int i = 0; i < heapNums.count; i++){
+            System.out.print(heapNums.heap[i]+ " ");
        }
 
 
@@ -134,6 +109,6 @@ public void heapifyDown(int index){
         
         
      }
-}
+    }
 
 
