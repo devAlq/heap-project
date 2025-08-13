@@ -40,38 +40,59 @@ public class MinHeap{
 
 
 
-public int peak(){
+public int peek(){
     if(isEmpty()){
         return -1;
     }return heap[0];
 }
 
 public int extract(){
-    int max = peak();
-    if(max != -1){
+    int min = peek();
+    if(min != -1){
         System.out.println("extract method: ");
         swap(count - 1, 0);
         count --;
         heapifyDown(0);
       
      
-    }return max;
+    }System.out.println(min+ " was deleted");
+    return min;
 }
+
+public int delete(int value){
+    for(int x = 0; x < count; x++){
+        if(this.heap[x] == value){
+            swap(count - 1, x);
+            count --;
+            System.out.println(value+ " was deleted");
+            int parent = (x - 1) / 2;
+            if(x > 0 &heap[x] > parent){
+                heapifyUp(x);
+            }else{
+                heapifyDown(x);
+            }
+            return value;
+        }
+    }
+     
+      
+     return -1;
+    }
 
 public void heapifyDown(int index){
     int leftChild = 2*index +1;
     int rightChild = 2*index +2;
-    int largest = index;
-    if(leftChild < count && heap[leftChild] < heap[largest]){
-        largest = leftChild;
+    int smallest = index;
+    if(leftChild < count && heap[leftChild] < heap[smallest]){
+        smallest = leftChild;
     }
-    if(rightChild > count && heap[rightChild] > heap[largest]){
-        largest = rightChild;
+    if(rightChild > count && heap[rightChild] > heap[smallest]){
+        smallest = rightChild;
     }
 
-    if(largest != index){
-        swap(index, largest);
-        heapifyDown(largest);
+    if(smallest != index){
+        swap(index, smallest);
+        heapifyDown(smallest);
     }
 
     
@@ -86,7 +107,6 @@ public void heapifyDown(int index){
 
     public static void main(String[] args) {
         MinHeap heapNums = new MinHeap(4);
-        heapNums.ensureCapacity();
         int[] vals ={50, 42, 98, 20, 30};
 
         for(int x =0; x<vals.length ; x++){
@@ -95,9 +115,10 @@ public void heapifyDown(int index){
         for (int i = 0; i < heapNums.count; i++){
             System.out.print(heapNums.heap[i]+ " ");
        }
-        System.out.println("heap peek: "+heapNums.peak());
+        System.out.println("heap peek: "+heapNums.peek());
         heapNums.extract();
-        System.out.println("heap peek: "+ heapNums.peak());
+        System.out.println("heap peek: "+ heapNums.peek());
+        heapNums.delete(98);
         for (int i = 0; i < heapNums.count; i++){
             System.out.print(heapNums.heap[i]+ " ");
        }
