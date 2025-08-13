@@ -66,7 +66,10 @@ public int delete(int value){
             count --;
             System.out.println(value+ " was deleted");
             int parent = (x - 1) / 2;
-            if(x > 0 &heap[x] > parent){
+            if(x == count){
+                return value;
+            }
+            if(x > 0 && heap[x] < heap[parent]){
                 heapifyUp(x);
             }else{
                 heapifyDown(x);
@@ -86,7 +89,7 @@ public void heapifyDown(int index){
     if(leftChild < count && heap[leftChild] < heap[smallest]){
         smallest = leftChild;
     }
-    if(rightChild > count && heap[rightChild] > heap[smallest]){
+    if (rightChild < count && heap[rightChild] < heap[smallest]){
         smallest = rightChild;
     }
 
@@ -131,5 +134,3 @@ public void heapifyDown(int index){
         
      }
     }
-
-
